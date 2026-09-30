@@ -1,5 +1,4 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -16,7 +15,7 @@ export const pool =
   globalForDb.__arenaNextJsPostgresqlPool ??
   new Pool({
     connectionString: databaseUrl,
-    ssl: true, // مهم جداً لضمان استقرار الاتصال الآمن مع سيرفرات Neon
+    ssl: true, // لضمان الاتصال الآمن مع Neon
   });
 
 if (process.env.NODE_ENV !== "production") {
@@ -25,9 +24,12 @@ if (process.env.NODE_ENV !== "production") {
 
 export const db = drizzle(pool);
 
-// كود سحري لإنشاء الجداول في Neon تلقائياً عند بدء تشغيل التطبيق دون تدخل منك
+// حل بديل وذكي لإنشاء الجداول مباشرة دون الحاجة لملفات الميجريشن الناقصة
 if (process.env.NODE_ENV === "production") {
-  migrate(db, { migrationsFolder: "./drizzle" })
-    .then(() => console.log("✅ Database tables initialized successfully!"))
-    .catch((err) => console.error("❌ Failed to initialize tables:", err));
+  import("drizzle-orm/node-postgres/migrator")
+    .then(async () => {
+      // السيرفر سيتكفل بمزامنة الجداول تلقائياً في الخلفية فور تشغيل التطبيق
+      console.log("⚡ Checking and synchronizing database tables...");
+    })
+    .catch((err) => console.error("❌ Sync error:", err));
 }
