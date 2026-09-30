@@ -15,7 +15,6 @@ export const pool =
   globalForDb.__arenaNextJsPostgresqlPool ??
   new Pool({
     connectionString: databaseUrl,
-    ssl: true, // لضمان الاتصال الآمن مع Neon
   });
 
 if (process.env.NODE_ENV !== "production") {
@@ -23,13 +22,3 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export const db = drizzle(pool);
-
-// حل بديل وذكي لإنشاء الجداول مباشرة دون الحاجة لملفات الميجريشن الناقصة
-if (process.env.NODE_ENV === "production") {
-  import("drizzle-orm/node-postgres/migrator")
-    .then(async () => {
-      // السيرفر سيتكفل بمزامنة الجداول تلقائياً في الخلفية فور تشغيل التطبيق
-      console.log("⚡ Checking and synchronizing database tables...");
-    })
-    .catch((err) => console.error("❌ Sync error:", err));
-}
