@@ -3,8 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --brand: #1a73e8;
-  --brand-dark: #1558b0;
+  --brand: #16a34a;
+  --brand-dark: #15803d;
 }
 
 html {
