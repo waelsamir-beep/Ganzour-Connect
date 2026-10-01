@@ -40,7 +40,7 @@ export default function CraftsmanCard({
 
   return (
     <article
-      className="anim-fade-up rounded-3xl bg-white dark:bg-slate-800 p-4 shadow-[0_8px_24px_rgba(16,24,40,0.06)] border border-slate-100 dark:border-slate-700 hover:shadow-[0_12px_32px_rgba(26,115,232,0.12)] transition-shadow"
+      className="anim-fade-up rounded-3xl bg-white dark:bg-slate-800 p-4 shadow-[0_8px_24px_rgba(16,24,40,0.06)] border border-slate-100 dark:border-slate-700 hover:shadow-[0_12px_32px_rgba(22,163,74,0.12)] transition-shadow"
       style={{ animationDelay: `${Math.min(index * 60, 400)}ms` }}
     >
       <div className="flex items-start gap-3">
@@ -49,7 +49,7 @@ export default function CraftsmanCard({
           <a
             href={tel}
             aria-label={`اتصال ${c.name}`}
-            className="grid h-12 w-12 place-items-center rounded-2xl bg-[#1a73e8] text-xl text-white shadow-lg shadow-blue-200 transition-transform hover:scale-105 active:scale-95"
+            className="grid h-12 w-12 place-items-center rounded-2xl bg-[#16a34a] text-xl text-white shadow-lg shadow-green-200 transition-transform hover:scale-105 active:scale-95"
           >
             📞
           </a>
@@ -81,11 +81,11 @@ export default function CraftsmanCard({
         <div className="min-w-0 flex-1">
           <Link href={`/craftsman/${c.id}`} className="block">
             <div className="flex items-center gap-1.5 flex-wrap">
-              <h3 className="text-[17px] font-extrabold text-slate-900 dark:text-slate-100 leading-tight hover:text-[#1a73e8] transition-colors">
+              <h3 className="text-[17px] font-extrabold text-slate-900 dark:text-slate-100 leading-tight hover:text-[#16a34a] transition-colors">
                 {c.name}
               </h3>
               {c.verified && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-green-50 dark:bg-green-900/30 px-2 py-0.5 text-[11px] font-bold text-green-700 dark:text-green-300 border border-green-100 dark:border-slate-700">
+                <span className="inline-flex items-center gap-1 rounded-full bg-green-50 dark:bg-green-900/30 px-2 py-0.5 text-[11px] font-bold text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">
                   ✔ موثّق
                 </span>
               )}
@@ -100,7 +100,7 @@ export default function CraftsmanCard({
                 href={mapsLink(c.location)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 hover:text-[#1a73e8] transition-colors"
+                className="inline-flex items-center gap-1 hover:text-[#16a34a] transition-colors"
                 title="إظهار على الخريطة"
               >
                 <span>🗺️</span> {c.location}
@@ -133,7 +133,7 @@ export default function CraftsmanCard({
         {/* avatar */}
         <Link
           href={`/craftsman/${c.id}`}
-          className="relative grid h-16 w-16 shrink-0 place-items-center rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 text-3xl border-2 border-blue-50"
+          className="relative grid h-16 w-16 shrink-0 place-items-center rounded-full bg-gradient-to-br from-green-100 to-emerald-100 text-3xl border-2 border-green-50"
         >
           {c.avatarEmoji || "👷"}
           {c.featured && (
@@ -159,7 +159,7 @@ export default function CraftsmanCard({
         </Link>
         <a
           href={`tel:${c.phone.replace(/[\s-]/g, "")}`}
-          className="flex-1 rounded-2xl bg-[#1a73e8] px-3 py-2 text-center text-[13px] font-bold text-white hover:bg-[#1558b0] transition-colors"
+          className="flex-1 rounded-2xl bg-[#16a34a] px-3 py-2 text-center text-[13px] font-bold text-white hover:bg-[#15803d] transition-colors"
         >
           📞 {c.phone}
         </a>
