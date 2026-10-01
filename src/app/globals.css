@@ -78,3 +78,54 @@ body {
     transform: translateY(-6px);
   }
 }
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Button Glow/Shine Effect */
+@keyframes buttonGlow {
+  0% {
+    box-shadow: 0 0 5px rgba(22, 163, 74, 0.3), 0 0 10px rgba(22, 163, 74, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(22, 163, 74, 0.6), 0 0 25px rgba(22, 163, 74, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(22, 163, 74, 0.3), 0 0 10px rgba(22, 163, 74, 0.1);
+  }
+}
+
+.btn-glow {
+  transition: all 0.3s ease;
+}
+
+.btn-glow:hover {
+  animation: buttonGlow 1.5s ease-in-out;
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+
+/* Icon 3D effect */
+.icon-3d {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.15)) drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.1));
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.icon-3d:hover {
+  filter: drop-shadow(3px 3px 6px rgba(22, 163, 74, 0.3)) drop-shadow(6px 6px 12px rgba(22, 163, 74, 0.2));
+}
