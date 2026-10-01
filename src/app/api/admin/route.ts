@@ -2,15 +2,14 @@ import { db } from "@/db";
 import { categories, craftsmen, contactMessages } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { ensureSeeded } from "@/lib/seed";
+import { isAdmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
-
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "janzour123";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const pw = searchParams.get("pw");
-  if (pw !== ADMIN_PASSWORD) {
+  if (!isAdmin(pw)) {
     return Response.json({ error: "كلمة المرور غير صحيحة" }, { status: 401 });
   }
   try {
@@ -51,7 +50,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const { password } = await req.json();
-    if (password === ADMIN_PASSWORD) return Response.json({ success: true });
+    if (isAdmin(password)) return Response.json({ success: true });
     return Response.json({ error: "كلمة المرور غير صحيحة" }, { status: 401 });
   } catch {
     return Response.json({ error: "خطأ" }, { status: 500 });

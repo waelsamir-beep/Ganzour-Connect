@@ -90,6 +90,7 @@ export default function AdminPage() {
   const [cats, setCats] = useState<Cat[]>([]);
   const [msgs, setMsgs] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [adminMsg, setAdminMsg] = useState("");
   const [tab, setTab] = useState<
     "requests" | "announce" | "cats" | "add" | "all" | "messages"
   >("requests");
@@ -124,34 +125,50 @@ export default function AdminPage() {
       setCMsgOut("⚠️ اكتب اسم التصنيف");
       return;
     }
-    const res = await fetch("/api/categories", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        pw,
-        name: cName,
-        icon: cIcon,
-        description: cDesc,
-        section: cSection,
-      }),
-    });
-    const d = await res.json();
-    if (res.ok) {
-      setCMsgOut("✅ تم إضافة التصنيف");
+    try {
+      const res = await fetch("/api/categories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pw,
+          name: cName,
+          icon: cIcon,
+          description: cDesc,
+          section: cSection,
+        }),
+      });
+      const d = await res.json();
+      if (!res.ok) {
+        setCMsgOut(`⚠️ ${d.error || "تعذر حفظ التصنيف"}`);
+        return;
+      }
+      setCMsgOut("✅ تم حفظ التصنيف وإضافته للدليل");
       setCName("");
       setCDesc("");
       setCIcon(ICON_CHOICES[0]);
       setCSection("الحرفيين");
-      refreshCats();
-    } else setCMsgOut(`⚠️ ${d.error || "خطأ"}`);
+      await refreshCats();
+    } catch {
+      setCMsgOut("⚠️ تعذر الاتصال بالخادم، لم يتم تأكيد الحفظ");
+    }
   }
 
   async function delCat(id: number, name: string) {
-    if (!confirm(`حذف تصنيف «${name}»؟ المهنيين اللي فيه هيتحذف تصنيفهم`)) return;
-    await fetch(`/api/categories/${id}?pw=${encodeURIComponent(pw)}`, {
-      method: "DELETE",
-    });
-    refreshCats();
+    if (!confirm(`حذف تصنيف «${name}»؟ المهنيين اللي فيه هيتحولوا لغير مصنّف`)) return;
+    try {
+      const res = await fetch(`/api/categories/${id}?pw=${encodeURIComponent(pw)}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAdminMsg(`⚠️ ${data.error || "تعذر حذف التصنيف"}`);
+        return;
+      }
+      setAdminMsg(`✅ تم حذف التصنيف «${name}»`);
+      await refreshCats();
+    } catch {
+      setAdminMsg("⚠️ تعذر الاتصال بالخادم، لم يتم تأكيد الحذف");
+    }
   }
 
   function startEdit(c: Cat) {
@@ -162,13 +179,23 @@ export default function AdminPage() {
 
   async function saveCat(id: number) {
     if (!editName.trim()) return;
-    await fetch(`/api/categories/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pw, name: editName, icon: editIcon }),
-    });
-    setEditId(null);
-    refreshCats();
+    try {
+      const res = await fetch(`/api/categories/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pw, name: editName, icon: editIcon }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAdminMsg(`⚠️ ${data.error || "تعذر حفظ التصنيف"}`);
+        return;
+      }
+      setEditId(null);
+      setAdminMsg("✅ تم حفظ تعديل التصنيف");
+      await refreshCats();
+    } catch {
+      setAdminMsg("⚠️ تعذر الاتصال بالخادم، لم يتم تأكيد الحفظ");
+    }
   }
   const [form, setForm] = useState({ ...emptyForm });
   const [formMsg, setFormMsg] = useState("");
@@ -271,18 +298,42 @@ export default function AdminPage() {
 
 
   async function toggle(id: number, field: string, value: any) {
-    await fetch(`/api/craftsmen/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ [field]: value }),
-    });
-    setRows((rs) => rs.map((r) => (r.id === id ? { ...r, [field]: value } : r)));
+    setAdminMsg("");
+    try {
+      const res = await fetch(`/api/craftsmen/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pw, [field]: value }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAdminMsg(`⚠️ ${data.error || "تعذر حفظ التعديل"}`);
+        return;
+      }
+      setRows((rs) => rs.map((r) => (r.id === id ? { ...r, [field]: value } : r)));
+      setAdminMsg("✅ تم حفظ التعديل");
+    } catch {
+      setAdminMsg("⚠️ تعذر الاتصال بالخادم، لم يتم تأكيد الحفظ");
+    }
   }
 
   async function del(id: number) {
     if (!confirm("حذف هذا المهني نهائياً؟")) return;
-    await fetch(`/api/craftsmen/${id}`, { method: "DELETE" });
-    setRows((rs) => rs.filter((r) => r.id !== id));
+    setAdminMsg("");
+    try {
+      const res = await fetch(`/api/craftsmen/${id}?pw=${encodeURIComponent(pw)}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAdminMsg(`⚠️ ${data.error || "تعذر حذف المهني"}`);
+        return;
+      }
+      setRows((rs) => rs.filter((r) => r.id !== id));
+      setAdminMsg("✅ تم حذف المهني من الدليل");
+    } catch {
+      setAdminMsg("⚠️ تعذر الاتصال بالخادم، لم يتم تأكيد الحذف");
+    }
   }
 
   async function handleRequest(id: number, action: "approve" | "reject") {
@@ -331,9 +382,9 @@ export default function AdminPage() {
       });
       const d = await res.json();
       if (res.ok) {
-        setFormMsg("✅ تمت إضافة المهني بنجاح");
+        setFormMsg("✅ تم حفظ المهني وإضافته للدليل مباشرة");
         setForm({ ...emptyForm });
-        load(pw);
+        await load(pw.trim());
       } else setFormMsg(`⚠️ ${d.error || "خطأ"}`);
     } catch {
       setFormMsg("⚠️ تعذر الحفظ");
@@ -510,6 +561,11 @@ export default function AdminPage() {
       </header>
 
       <main className="mx-auto -mt-3 max-w-2xl px-4">
+        {adminMsg && (
+          <p role="status" className="mb-3 rounded-2xl bg-white dark:bg-slate-800 px-4 py-3 text-[13px] font-bold text-slate-700 dark:text-slate-200 shadow-sm">
+            {adminMsg}
+          </p>
+        )}
         {connErr && (
           <div className="mb-3 flex items-center justify-between gap-2 rounded-2xl border border-amber-200 dark:border-amber-800/60 bg-amber-50 dark:bg-amber-900/30 px-4 py-3">
             <p className="text-[12.5px] font-bold text-amber-800 dark:text-amber-200">

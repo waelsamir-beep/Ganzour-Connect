@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { categories, craftsmen, reviews } from "@/db/schema";
 import { count, eq } from "drizzle-orm";
+import { isAdmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -88,6 +89,9 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await req.json();
+    if (!isAdmin(body.pw)) {
+      return Response.json({ error: "غير مصرح" }, { status: 401 });
+    }
     const allowed: Record<string, any> = {};
     const fields = [
       "name",
@@ -122,11 +126,15 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
+    const { searchParams } = new URL(req.url);
+    if (!isAdmin(searchParams.get("pw"))) {
+      return Response.json({ error: "غير مصرح" }, { status: 401 });
+    }
     await db.delete(craftsmen).where(eq(craftsmen.id, parseInt(id)));
     return Response.json({ success: true });
   } catch (e) {
