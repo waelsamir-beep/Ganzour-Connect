@@ -187,11 +187,11 @@ export default function HomePage() {
   return (
     <div className="min-h-screen pb-2">
       {showSplash && (
-        <div className="fixed inset-0 z-[100] grid place-items-center bg-[#1a73e8]">
+        <div className="fixed inset-0 z-[100] grid place-items-center bg-[#16a34a]">
           <div className="text-center text-white anim-pop">
             <div className="text-6xl mb-3">🛠️</div>
             <h1 className="text-2xl font-black">دليل المهن - جنزور</h1>
-            <p className="mt-1 text-blue-100 text-sm">أرقام موثوقة للحرفيين...</p>
+            <p className="mt-1 text-green-100 text-sm">أرقام موثوقة للحرفيين...</p>
             <div className="mx-auto mt-4 h-1.5 w-32 overflow-hidden rounded-full bg-white/30">
               <div className="h-full w-1/2 animate-pulse rounded-full bg-white dark:bg-slate-800" />
             </div>
@@ -200,7 +200,7 @@ export default function HomePage() {
       )}
 
       {/* Header */}
-      <header className="relative overflow-hidden bg-gradient-to-b from-[#1a73e8] to-[#1a5fd0] pb-20 pt-6 rounded-b-[28px]">
+      <header className="relative overflow-hidden bg-gradient-to-b from-[#16a34a] to-[#15803d] pb-20 pt-6 rounded-b-[28px]">
         <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-white/10" />
         <div className="pointer-events-none absolute right-10 top-16 h-24 w-24 rounded-full bg-white/10" />
         <div className="pointer-events-none absolute left-1/3 bottom-0 h-16 w-64 rounded-full bg-black/5 blur-xl" />
@@ -211,7 +211,7 @@ export default function HomePage() {
               <span className="text-2xl">🛠️</span>
               دليل المهن - جنزور
             </h1>
-            <p className="mt-1 text-[13px] font-medium text-blue-100">
+            <p className="mt-1 text-[13px] font-medium text-green-100">
               أرقام موثوقة للحرفيين والمهنيين في منطقة جنزور
             </p>
           </div>
@@ -220,15 +220,15 @@ export default function HomePage() {
           <div className="mt-4 grid grid-cols-4 gap-2 text-center">
             <div className="rounded-2xl bg-white/15 backdrop-blur px-1 py-2">
               <div className="text-white font-black text-[15px]">👷 {stats.total}</div>
-              <div className="text-[10.5px] text-blue-100">حرفي</div>
+              <div className="text-[10.5px] text-green-100">حرفي</div>
             </div>
             <div className="rounded-2xl bg-white/15 backdrop-blur px-1 py-2">
               <div className="text-white font-black text-[15px]">✅ {stats.verified}</div>
-              <div className="text-[10.5px] text-blue-100">موثّق</div>
+              <div className="text-[10.5px] text-green-100">موثّق</div>
             </div>
             <div className="rounded-2xl bg-white/15 backdrop-blur px-1 py-2">
               <div className="text-white font-black text-[15px]">📂 {stats.categories}</div>
-              <div className="text-[10.5px] text-blue-100">تصنيف</div>
+              <div className="text-[10.5px] text-green-100">تصنيف</div>
             </div>
             <Link href="/add" className="rounded-2xl bg-amber-400 px-1 py-2 font-black text-amber-950 hover:bg-amber-300 transition-colors">
               <div className="text-[15px]">📝 انضم</div>
@@ -257,7 +257,7 @@ export default function HomePage() {
           )}
           <button
             aria-label="بحث"
-            className="grid w-16 place-items-center bg-[#1a73e8] text-xl text-white hover:bg-[#1558b0] transition-colors"
+            className="grid w-16 place-items-center bg-[#16a34a] text-xl text-white hover:bg-[#15803d] transition-colors"
           >
             🔍
           </button>
@@ -299,7 +299,7 @@ export default function HomePage() {
               onClick={() => setSort(s.v)}
               className={`shrink-0 rounded-full px-3 py-1.5 text-[12px] font-bold border transition-colors ${
                 sort === s.v
-                  ? "bg-[#1a73e8] text-white border-[#1a73e8]"
+                  ? "bg-[#16a34a] text-white border-[#16a34a]"
                   : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600"
               }`}
             >
@@ -339,7 +339,7 @@ export default function HomePage() {
               <button
                 key={r}
                 onClick={() => setSearch(r)}
-                className="shrink-0 rounded-full bg-white dark:bg-slate-800 px-3 py-1.5 text-[12px] font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600 hover:border-[#1a73e8] hover:text-[#1a73e8] transition-colors"
+                className="shrink-0 rounded-full bg-white dark:bg-slate-800 px-3 py-1.5 text-[12px] font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600 hover:border-green-400"
               >
                 {r}
               </button>
@@ -348,7 +348,7 @@ export default function HomePage() {
         )}
 
         {!isInstalled && (
-          <div className="mt-3 flex items-center gap-2 rounded-2xl border border-blue-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 shadow-sm">
+          <div className="mt-3 flex items-center gap-2 rounded-2xl border border-green-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 shadow-sm">
             <img src="/icons/icon-192.png" alt="" className="h-9 w-9 rounded-xl" />
             <p className="flex-1 text-[12px] font-bold text-slate-600 dark:text-slate-300 leading-tight">
               حمّل التطبيق على جوالك ويشتغل بدون نت 📲
@@ -356,14 +356,14 @@ export default function HomePage() {
             {canInstall ? (
               <button
                 onClick={() => install()}
-                className="rounded-xl bg-[#1a73e8] px-3 py-2 text-[12px] font-black text-white"
+                className="rounded-xl bg-[#16a34a] px-3 py-2 text-[12px] font-black text-white"
               >
                 تثبيت
               </button>
             ) : (
               <Link
                 href="/install"
-                className="rounded-xl bg-[#1a73e8] px-3 py-2 text-[12px] font-black text-white"
+                className="rounded-xl bg-[#16a34a] px-3 py-2 text-[12px] font-black text-white"
               >
                 تثبيت
               </Link>
@@ -375,7 +375,7 @@ export default function HomePage() {
       <main className="mx-auto max-w-xl px-4">
         {/* admin announcement */}
         {showAnn && (
-          <div className="anim-fade-up mt-4 flex items-start gap-3 rounded-2xl border border-amber-200 dark:border-amber-800/60 bg-gradient-to-l from-amber-50 dark:from-amber-900/40 to-orange-50 dark:to-orange-900/40 p-3.5 shadow-sm">
+          <div className="anim-fade-up mt-4 flex items-start gap-3 rounded-2xl border border-amber-200 dark:border-amber-800/60 bg-gradient-to-l from-amber-50 dark:from-amber-900/40 to-orange-50 dark:to-orange-900/20 p-3 shadow-sm">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-400 text-xl shadow-sm">
               📣
             </span>
@@ -406,7 +406,7 @@ export default function HomePage() {
               onClick={() => selectSection(s.name)}
               className={`flex shrink-0 items-center gap-1.5 rounded-2xl border-2 px-3.5 py-2.5 text-[13px] font-black transition-all ${
                 section === s.name
-                  ? "border-[#1a73e8] bg-blue-50 dark:bg-blue-900/30 text-[#1a73e8] dark:text-blue-300 shadow-[0_8px_20px_rgba(26,115,232,0.18)]"
+                  ? "border-[#16a34a] bg-green-50 dark:bg-green-900/30 text-[#16a34a] dark:text-green-300 shadow-[0_8px_20px_rgba(22,163,74,0.18)]"
                   : "border-transparent bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm"
               }`}
             >
@@ -415,7 +415,7 @@ export default function HomePage() {
               <span
                 className={`rounded-full px-1.5 py-0.5 text-[10px] font-black ${
                   section === s.name
-                    ? "bg-[#1a73e8] text-white"
+                    ? "bg-[#16a34a] text-white"
                     : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300"
                 }`}
               >
@@ -432,7 +432,7 @@ export default function HomePage() {
           </h3>
           <button
             onClick={() => setShowAllCats(!showAllCats)}
-            className="text-[12.5px] font-bold text-[#1a73e8] hover:underline"
+            className="text-[12.5px] font-bold text-[#16a34a] hover:underline"
           >
             {showAllCats ? "إخفاء" : "عرض الكل"}
           </button>
@@ -444,7 +444,7 @@ export default function HomePage() {
               onClick={() => setActiveCat(activeCat === c.id ? "all" : c.id)}
               className={`relative flex flex-col items-center gap-1.5 rounded-2xl bg-white dark:bg-slate-800 px-1 py-4 shadow-sm border-2 transition-all hover:shadow-md ${
                 activeCat === c.id
-                  ? "border-[#1a73e8] shadow-[0_8px_20px_rgba(26,115,232,0.15)]"
+                  ? "border-[#16a34a] shadow-[0_8px_20px_rgba(22,163,74,0.15)]"
                   : "border-transparent"
               }`}
             >
@@ -496,7 +496,7 @@ export default function HomePage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="🔍 ابحث عن مهنة معينة أو مجال..."
-              className="w-full rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/60 px-4 py-3 text-[14px] font-semibold text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-[#1a73e8] focus:bg-white dark:focus:bg-slate-800 focus:outline-none"
+              className="w-full rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/60 px-4 py-3 text-[14px] font-semibold text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#16a34a]/50"
             />
             <div>
               <p className="mb-1.5 text-[12px] font-bold text-slate-500 dark:text-slate-400">
@@ -581,7 +581,7 @@ export default function HomePage() {
                     setVerifiedOnly(false);
                   }
                 }}
-                className="mt-4 rounded-2xl bg-[#1a73e8] px-6 py-2.5 text-sm font-bold text-white"
+                className="mt-4 rounded-2xl bg-[#16a34a] px-6 py-2.5 text-sm font-bold text-white"
               >
                 {favsOnly ? "عرض كل الحرفيين" : "عرض الكل"}
               </button>
@@ -600,16 +600,16 @@ export default function HomePage() {
         </div>
 
         {/* CTA add */}
-        <div className="mt-5 rounded-3xl bg-gradient-to-br from-[#1a73e8] to-[#6c3ce0] p-5 text-center text-white shadow-xl shadow-blue-100">
+        <div className="mt-5 rounded-3xl bg-gradient-to-br from-[#16a34a] to-[#059669] p-5 text-center text-white shadow-xl shadow-green-100">
           <div className="text-4xl">👷‍♂️</div>
           <h3 className="mt-2 text-lg font-black">عندك مهنة في جنزور؟</h3>
-          <p className="mt-1 text-[13px] text-blue-100">
+          <p className="mt-1 text-[13px] text-green-100">
             ابعت طلب انضمام والإدارة هتراجعه وتضيفك للدليل مجاناً
           </p>
           <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:justify-center">
             <Link
               href="/add"
-              className="rounded-2xl bg-white px-8 py-2.5 text-sm font-black text-[#1a73e8] hover:bg-blue-50 transition-colors"
+              className="rounded-2xl bg-white px-8 py-2.5 text-sm font-black text-[#16a34a] hover:bg-green-50 transition-colors"
             >
               📝 اطلب الانضمام
             </Link>
